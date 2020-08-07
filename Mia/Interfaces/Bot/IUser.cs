@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mia
+namespace Mia.Interfaces.Bot
 {
-    public class Class1
+    public interface IUser
     {
+        object UserId { get; set; }
     }
 }
