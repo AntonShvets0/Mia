@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,26 +44,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attachments\ButtonAttachment.cs" />
+    <Compile Include="Attachments\PhotoAttachment.cs" />
     <Compile Include="Data\IniProvider.cs" />
+    <Compile Include="Exceptions\ApiTelegramException.cs" />
+    <Compile Include="Exceptions\ApiVkException.cs" />
+    <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Interfaces\Api\IApiProvider.cs" />
+    <Compile Include="Interfaces\Api\IAttachment.cs" />
+    <Compile Include="Interfaces\Api\IMessage.cs" />
     <Compile Include="Interfaces\Api\IMessageApi.cs" />
     <Compile Include="Interfaces\Bot\ICommand.cs" />
-    <Compile Include="Interfaces\Bot\ICommandResponse.cs" />
     <Compile Include="Interfaces\Bot\IPlatformProvider.cs" />
     <Compile Include="Interfaces\Bot\IUser.cs" />
     <Compile Include="Interfaces\IConfigProvider.cs" />
-    <Compile Include="Messages\Message.cs" />
-    <Compile Include="Messages\Update.cs" />
+    <Compile Include="Keyboard\Button.cs" />
+    <Compile Include="Keyboard\ButtonColor.cs" />
+    <Compile Include="Keyboard\KeyboardBuilder.cs" />
+    <Compile Include="Library\Api\Request.cs" />
+    <Compile Include="Library\Api\Telegram\TelegramApiProvider.cs" />
+    <Compile Include="Library\Api\Vk\VkApiProvider.cs" />
+    <Compile Include="Library\Api\Telegram\TelegramMessageApi.cs" />
+    <Compile Include="Library\Api\Vk\VkMessageApi.cs" />
+    <Compile Include="Library\Providers\TelegramProvider.cs" />
+    <Compile Include="Library\Providers\VkProvider.cs" />
+    <Compile Include="Library\User\TelegramUser.cs" />
+    <Compile Include="Library\User\VkUser.cs" />
+    <Compile Include="Messages\NewMessage.cs" />
+    <Compile Include="Messages\VkNewMessage.cs" />
     <Compile Include="Mia.cs" />
     <Compile Include="Data\Config.cs" />
     <Compile Include="MiaHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\Reflection.cs" />
     <Compile Include="Response\SyntaxErrorResponse.cs" />
     <Compile Include="Response\ErrorResponse.cs" />
     <Compile Include="Response\MessageResponse.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Providers\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

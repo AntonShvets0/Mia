@@ -1,4 +1,5 @@
-﻿using Mia.Interfaces.Bot;
+﻿using Mia.Interfaces.Api;
+using Mia.Interfaces.Bot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Mia.Messages
 {
-    public abstract class Update
+    public abstract class NewMessage
     {
         public object UserId;
 
         public object ConversationId;
 
-        public Message Message;
+        public IMessage Message;
 
         public IUser GetUser() => Mia.Users.Where(u => u.UserId == UserId).FirstOrDefault();
     }

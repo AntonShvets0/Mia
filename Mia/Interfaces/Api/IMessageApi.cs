@@ -1,5 +1,6 @@
 ﻿using Mia.Interfaces.Bot;
 using Mia.Messages;
+using Mia.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Mia.Interfaces.Api
 {
     public interface IMessageApi
     {
-        void SendMessage(ICommandResponse message, IUser user);
+        void SendMessage(MessageResponse message, IUser user);
     }
 }

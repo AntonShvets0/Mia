@@ -15,19 +15,21 @@ namespace Mia
     class MiaHandler
     {
         IPlatformProvider Provider;
-        Mia MiaInstance;
+        Mia MiaInstance = Mia.GetInstance();
         Config Config;
+        Dictionary<IUser, object> WorkedUsers = new Dictionary<IUser, object>();
 
-        public MiaHandler(IPlatformProvider provider, Mia miaInstance)
+
+        public MiaHandler(IPlatformProvider provider)
         {
             Provider = provider;
-            MiaInstance = miaInstance;
             Config = MiaInstance.Configs.Where(c => c.FileName == "bot.mia").First();
         }
 
         private void HandleUpdate(object obj)
         {
-            var update = (Update)obj;
+            var update = (NewMessage)obj;
+
             IUser user;
 
             if (update.GetUser() == null)
@@ -40,33 +42,38 @@ namespace Mia
                 user = update.GetUser();
             }
 
-            var prefix = GetPrefix();
+            if (!WorkedUsers.ContainsKey(user)) WorkedUsers.Add(user, new object());
 
-            if (!update.Message.Text.StartsWith(prefix)) return;
-
-            var command = MiaInstance.Commands.Where(c => c.Aliases.Contains(update.Message.Text.Substring(prefix.Length))).FirstOrDefault();
-
-            if (command == null)
+            lock (WorkedUsers[user])
             {
-                Provider.GetApi().Message.SendMessage(GetUnknownCommand(), user);
-            } 
-            else
-            {
-                var args = update.Message.Text.Split(' ').ToList();
-                args.RemoveAt(0);
+                var prefix = GetPrefix();
 
-                var response = command.Run(args.ToArray(), user);
-                
-                if (response is SyntaxErrorResponse)
-                {
-                    response = GetSyntaxError();
-                }
-                else if (response is ErrorResponse)
-                {
-                    response = GetError(response.Text);
-                }
+                if (!update.Message.Text.StartsWith(prefix)) return;
 
-                Provider.GetApi().Message.SendMessage(response, user);
+                var command = Mia.Commands.Where(c => c.Aliases.Contains(update.Message.Text.Substring(prefix.Length))).FirstOrDefault();
+
+                if (command == null)
+                {
+                    Provider.GetApi().Message.SendMessage(GetUnknownCommand(), user);
+                }
+                else
+                {
+                    var args = update.Message.Text.Split(' ').ToList();
+                    args.RemoveAt(0);
+
+                    var response = command.Run(args.ToArray(), user);
+
+                    if (response is SyntaxErrorResponse)
+                    {
+                        response = GetSyntaxError();
+                    }
+                    else if (response is ErrorResponse)
+                    {
+                        response = GetError(response.Text);
+                    }
+
+                    Provider.GetApi().Message.SendMessage(response, user);
+                }
             }
         }
 

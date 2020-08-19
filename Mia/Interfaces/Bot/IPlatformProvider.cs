@@ -10,9 +10,9 @@ namespace Mia.Interfaces.Bot
 {
     public interface IPlatformProvider
     {
-        List<Update> GetUpdates();
+        List<NewMessage> GetUpdates();
 
-        IUser CreateUser(Update update);
+        IUser CreateUser(NewMessage update);
 
         IApiProvider GetApi();
     }

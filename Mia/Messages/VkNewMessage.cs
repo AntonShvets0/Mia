@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mia.Interfaces.Bot
+namespace Mia.Messages
 {
-    public interface ICommandResponse
+    public class VkNewMessage : NewMessage
     {
-        string Text { get; set; }
     }
 }

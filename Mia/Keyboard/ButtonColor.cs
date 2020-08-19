@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mia.Messages
+namespace Mia.Keyboard
 {
-    public class Message
+    public enum ButtonColor
     {
-        public string Text;
+        RED,
+        BLUE,
+        YELLOW,
+        WHITE,
+        GREEN
     }
 }
